@@ -5,7 +5,7 @@ class Tag < ActiveRecord::Base
   has_many :entities, through: :entity_tags
 
   before_create do |tag|
-    tag.id ||= SecureRandom.uuid
+    tag.uuid ||= SecureRandom.uuid
   end
 
 end

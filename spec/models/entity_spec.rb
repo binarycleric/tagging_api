@@ -10,8 +10,9 @@ RSpec.describe Entity do
   let(:tags) { %w( Test1 Test2 ) }
 
   it 'adds uuid by default' do
-    entity.save
-    expect(entity.id).to match /^[a-f0-9]{8}\-([a-f0-9]{4}\-){3}[a-f0-9]{12}/ 
+    entity.save!
+
+    expect(entity.uuid).to match /^[a-f0-9]{8}\-([a-f0-9]{4}\-){3}[a-f0-9]{12}/ 
   end
 
   it 'adds tags to new entity' do
@@ -43,17 +44,17 @@ RSpec.describe Entity do
     before { entity.save }
 
     it 'returns record' do
-      e2 = Entity.find_typed_entity(id: entity.id, type: entity.type)
+      e2 = Entity.find_typed_entity(uuid: entity.uuid, type: entity.type)
       expect(e2).to eql entity
     end
 
     it 'raises RecordNotFound if record values are invalid' do
       expect do
-        Entity.find_typed_entity(id: 12345, type: entity.type)
+        Entity.find_typed_entity(uuid: 12345, type: entity.type)
       end.to raise_error(ActiveRecord::RecordNotFound)
 
       expect do
-        Entity.find_typed_entity(id: entity.id, type: 'Foo')
+        Entity.find_typed_entity(uuid: entity.id, type: 'Foo')
       end.to raise_error(ActiveRecord::RecordNotFound)
     end 
 

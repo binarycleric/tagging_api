@@ -5,7 +5,7 @@ class TagsController < ApplicationController
   # NOTE: Since we're using UUIDs for the entity's primary key, we don't need
   #       to do anything with :entity_type. The joys of using UUIDs. :) 
   def show
-    @entity = Entity.find_typed_entity id: params[:entity_id],
+    @entity = Entity.find_typed_entity uuid: params[:entity_id],
                                        type: params[:entity_type]
     render "entity"
   end
@@ -13,10 +13,9 @@ class TagsController < ApplicationController
   ##
   # Uses PUT, since we are logically upserting. 
   def create
-    @entity = Entity.find_or_initialize_by id: params[:entity_id]
-    @entity.tag_names = (params[:tags] || [])
-    @entity.type = params[:entity_type]
-    @entity.save!
+    @entity = Entity.create_typed_entity uuid: params[:entity_id],
+                                         type: params[:entity_type],
+                                         tags: (params[:tags] || [])
 
     location = create_tags_path entity_id: params[:entity_id],
                                 entity_type: params[:entity_type] 
@@ -26,7 +25,7 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    @entity = Entity.find_typed_entity id: params[:entity_id],
+    @entity = Entity.find_typed_entity uuid: params[:entity_id],
                                        type: params[:entity_type]
     @entity.destroy
 

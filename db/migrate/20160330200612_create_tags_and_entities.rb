@@ -1,18 +1,20 @@
 class CreateTagsAndEntities < ActiveRecord::Migration
   def change
-    create_table :tags, id: false do |t|
-      t.uuid :id, primary_key: true
+    create_table :tags do |t|
+      t.uuid :uuid
       t.string :name
       t.timestamps null: false
     end
     add_index :tags, [:name], unique: true
+    add_index :tags, :uuid
 
-    create_table :entities, id: false do |t|
-      t.uuid :id, primary_key: true
+    create_table :entities do |t|
+      t.uuid :uuid
       t.integer :entity_type_id
       t.timestamps null: false
     end
     add_index :entities, [:entity_type_id]
+    add_index :entities, :uuid
 
     create_table :entity_types do |t|
       t.string :name
@@ -20,8 +22,8 @@ class CreateTagsAndEntities < ActiveRecord::Migration
     add_index :entity_types, [:name], unique: true
 
     create_table :entity_tags do |t|
-      t.uuid :entity_id
-      t.uuid :tag_id
+      t.integer :entity_id
+      t.integer :tag_id
       t.timestamps null: false
     end
     add_index :entity_tags, [:entity_id, :tag_id], unique: true

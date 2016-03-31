@@ -14,19 +14,20 @@
 ActiveRecord::Schema.define(version: 20160330200612) do
 
   create_table "entities", force: :cascade do |t|
+    t.uuid     "uuid",           limit: 16
     t.integer  "entity_type_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   add_index "entities", ["entity_type_id"], name: "index_entities_on_entity_type_id"
-  add_index "entities", ["id"], name: "sqlite_autoindex_entities_1", unique: true
+  add_index "entities", ["uuid"], name: "index_entities_on_uuid"
 
   create_table "entity_tags", force: :cascade do |t|
-    t.uuid     "entity_id",  limit: 16
-    t.uuid     "tag_id",     limit: 16
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "entity_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "entity_tags", ["entity_id", "tag_id"], name: "index_entity_tags_on_entity_id_and_tag_id", unique: true
@@ -38,12 +39,13 @@ ActiveRecord::Schema.define(version: 20160330200612) do
   add_index "entity_types", ["name"], name: "index_entity_types_on_name", unique: true
 
   create_table "tags", force: :cascade do |t|
+    t.uuid     "uuid",       limit: 16
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  add_index "tags", ["id"], name: "sqlite_autoindex_tags_1", unique: true
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true
+  add_index "tags", ["uuid"], name: "index_tags_on_uuid"
 
 end

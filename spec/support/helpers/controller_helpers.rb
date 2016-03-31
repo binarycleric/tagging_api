@@ -11,7 +11,8 @@ module ControllerHelpers
   def expect_entity_json_response(entity)
     json_entity = JSON.parse(response.body)["entity"]
 
-    expect(json_entity["uuid"]).to eql entity.id
+    expect(json_entity["uuid"]).to eql entity.uuid
+    expect(json_entity["uuid"]).to match /^[a-f0-9]{8}\-([a-f0-9]{4}\-){3}[a-f0-9]{12}/ 
     expect(json_entity["tags"].sort).to eql entity.tag_names.sort
     expect(json_entity["type"]).to eql entity.type
     expect(json_entity["created_at"]).to be

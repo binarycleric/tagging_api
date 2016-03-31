@@ -100,11 +100,12 @@ namespace :acceptance do
                                     tags: %w( Awesome ))
     entity = JSON.parse(response.body)["entity"]
 
-    pp entity
+    response = client.get_entity_stats(type: entity["type"], id: entity["uuid"])
+    entity_tags = JSON.parse(response.body)["tags"]
 
-    # response = client.get_entity_stats(type: entity["type"], id: entity["uuid"])
-    #
-    # pp response.body 
+    if entity_tags.first["name"] != "Awesome"
+      raise "Created Tag is missing!"
+    end
 
     puts "All good!"
   end

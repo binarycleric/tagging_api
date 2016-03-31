@@ -8,12 +8,20 @@ class Entity < ActiveRecord::Base
   validates :entity_type, presence: true
 
   before_create do |entity|
-    entity.id ||= SecureRandom.uuid
+    entity.uuid ||= SecureRandom.uuid
   end
 
-  def self.find_typed_entity(id:, type:)
+  def self.create_typed_entity(uuid:, type:, tags: [])
+    Entity.find_or_initialize_by(uuid: uuid).tap do |entity| 
+      entity.tag_names = tags 
+      entity.type = type 
+      entity.save!
+    end
+  end
+
+  def self.find_typed_entity(uuid:, type:)
     type_obj = EntityType.find_by name: type 
-    find_by(id: id, entity_type: type_obj).tap do |entity|
+    find_by(uuid: uuid, entity_type: type_obj).tap do |entity|
       raise ActiveRecord::RecordNotFound unless entity
     end
   end

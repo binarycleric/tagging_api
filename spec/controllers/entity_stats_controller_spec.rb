@@ -21,7 +21,7 @@ RSpec.describe EntityStatsController do
     end
 
     it "displays stats about tags" do
-      get :show, {entity_id: entity.id, entity_type: entity.type}
+      get :show, {entity_id: entity.uuid, entity_type: entity.type}
 
       tags = JSON.parse(response.body)["tags"]
       expect(tags).to be

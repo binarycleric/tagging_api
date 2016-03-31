@@ -21,7 +21,7 @@ RSpec.describe TagsController do
 
   describe "#show" do
     it 'returns entity when requested' do
-      get :show, {entity_id: entity.id, entity_type: entity.type}
+      get :show, {entity_id: entity.uuid, entity_type: entity.type}
       expect_entity_json_response(entity)
     end
 
@@ -46,7 +46,7 @@ RSpec.describe TagsController do
     it "creates new tag in database" do
       put :create, params
 
-      entity = Entity.find(uuid)
+      entity = Entity.find_by(uuid: uuid)
       expect(entity.tag_names).to eql %w( Large )
     end
 
@@ -60,14 +60,14 @@ RSpec.describe TagsController do
     it "returns JSON representation of entity" do
       put :create, params
 
-      entity = Entity.find(uuid)
+      entity = Entity.find_by uuid: uuid
       expect_entity_json_response(entity)
     end
   end
 
   describe "#destroy" do
     it "deletes entity" do
-      delete :destroy, {entity_type: entity.type, entity_id: entity.id}
+      delete :destroy, {entity_type: entity.type, entity_id: entity.uuid}
 
       expect(response).to have_http_status :no_content
     end
