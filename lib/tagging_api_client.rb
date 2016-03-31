@@ -26,7 +26,7 @@ class TaggingApiClient
   end
 
   def get_stats
-    req = Net::HTTP::Get.new("/stats")
+    req = Net::HTTP::Get.new("/stats/tags")
     response = get_response(req)
   end
 
