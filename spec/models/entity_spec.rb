@@ -27,4 +27,22 @@ RSpec.describe Entity do
     expect(entity.tags.map(&:name)).to eql tags2
   end
 
+  context 'deletion' do
+    let(:tags) { %w( Test1 Test2 ) }
+    let(:entity) do
+      described_class.new do |entity|
+        entity.set_tags tags
+        entity.save!
+      end
+    end
+
+    it 'removes all entity_tags entries on delete' do
+      entity.destroy
+
+      expect(EntityTag.where(entity_id: entity.id)).to be_empty
+    end
+
+  end
+
+
 end
