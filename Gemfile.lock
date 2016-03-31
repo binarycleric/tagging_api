@@ -50,6 +50,7 @@ GEM
     byebug (8.2.2)
     coderay (1.1.1)
     concurrent-ruby (1.0.1)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
@@ -144,6 +145,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   byebug
+  database_cleaner
   jbuilder (~> 2.0)
   rails (= 4.2.6)
   rspec-rails

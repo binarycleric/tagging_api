@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  # resources :tags, only: [:create], defaults: {format: :json}
   put "/tags/:entity_type/:entity_id" => "tags#create",
     as: :create_tags, 
     defaults: {format: :json} 
@@ -11,5 +10,9 @@ Rails.application.routes.draw do
   delete "/tags/:entity_type/:entity_id" => "tags#destroy",
     defaults: {format: :json}
 
+  get "/stats" => "stats#index",
+    defaults: {format: :json}
 
+  get "/stats/:entity_type/:entity_id" => "stats#show",
+    defaults: {format: :json}
 end
