@@ -6,7 +6,6 @@ class Entity < ActiveRecord::Base
 
   validates :entity_type, presence: true
 
-  # TODO: Duplicated in Tag. Move somewhere common.
   before_create do |entity|
     entity.id ||= SecureRandom.uuid
   end
@@ -32,7 +31,7 @@ class Entity < ActiveRecord::Base
   end
 
   def tag_names
-    self.entity_tags.map(&:tag).map(&:name)
+    self.entity_tags.preload(:tag).map(&:tag).map(&:name)
   end
 
 end

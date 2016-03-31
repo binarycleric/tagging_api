@@ -3,7 +3,7 @@ class EntityStatsController < ApplicationController
 
   def show
     @entity = Entity.find params[:entity_id]
-    @entity_tags = @entity.entity_tags
+    @entity_tags = @entity.entity_tags.preload(:tag)
   end
 
 end

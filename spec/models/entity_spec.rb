@@ -16,7 +16,9 @@ RSpec.describe Entity do
 
   it 'adds tags to new entity' do
     entity.tag_names = tags
-    expect(entity.tag_names).to eql tags
+    entity.save!
+
+    expect(entity.tag_names.sort).to eql tags.sort
   end
 
   it 'overwrites existing tags' do
@@ -27,7 +29,7 @@ RSpec.describe Entity do
     entity.tag_names = tags2
     entity.save!
     
-    expect(entity.tag_names).to eql tags2
+    expect(entity.tag_names.sort).to eql tags2.sort
   end
 
   context 'deletion' do
