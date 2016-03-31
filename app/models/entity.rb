@@ -11,6 +11,10 @@ class Entity < ActiveRecord::Base
     entity.uuid ||= SecureRandom.uuid
   end
 
+  ##
+  # Create entity with specified uuid and type. Using this method to get
+  # ActiveRecord looking code out of the controller. If the underlying
+  # implementation is changed we should just maintain the contract. 
   def self.create_typed_entity(uuid:, type:, tags: [])
     Entity.find_or_initialize_by(uuid: uuid).tap do |entity| 
       entity.tag_names = tags 
@@ -19,6 +23,10 @@ class Entity < ActiveRecord::Base
     end
   end
 
+  ##
+  # Finds and entity given a uuid and type.
+  #
+  # @see self.create_typed_entity
   def self.find_typed_entity(uuid:, type:)
     type_obj = EntityType.find_by name: type 
     find_by(uuid: uuid, entity_type: type_obj).tap do |entity|
@@ -26,10 +34,16 @@ class Entity < ActiveRecord::Base
     end
   end
 
+  ##
+  # Sets the entity type, will create a new EntityType record if one does not
+  # already exist.
   def type=(name)
     self.entity_type = EntityType.find_or_create_by(name: name)
   end
 
+  ##
+  # Returns the entity type's name. Adding this helper method to avoid exposing
+  # associations to the controller.
   def type
     entity_type.name
   end
@@ -46,6 +60,8 @@ class Entity < ActiveRecord::Base
     end
   end
 
+  ##
+  # Returns the name of all tags associated with this entity.
   def tag_names
     self.entity_tags.map(&:tag).map(&:name)
   end
