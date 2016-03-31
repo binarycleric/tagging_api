@@ -8,7 +8,6 @@ RSpec.describe EntityStatsController do
   end
 
   describe "#show" do
-
     let(:expected_tags) do
       %w( iPhone Neat Fast Nifty A7 Mobile yolo swag MLG )
     end

@@ -1,14 +1,5 @@
 class TagsController < ApplicationController
-
-  rescue_from ActiveRecord::RecordNotFound do
-    render status: :not_found, json: {
-      error: {
-        message: "Specified record not found",
-        params: {entity_id: params[:entity_id],
-                 entity_type: params[:entity_type]}
-      }
-    } 
-  end
+  handle_missing_entity
 
   ##
   # NOTE: Since we're using UUIDs for the entity's primary key, we don't need
