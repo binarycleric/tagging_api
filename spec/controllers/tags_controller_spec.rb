@@ -15,6 +15,9 @@ RSpec.describe TagsController do
       entity.save!
     end
   end
+  let(:uri_pattern) do
+    /\/tags\/#{params[:entity_type]}\/#{params[:entity_id]}$/
+  end 
 
   describe "#show" do
     it 'returns entity when requested' do
@@ -24,9 +27,6 @@ RSpec.describe TagsController do
   end
 
   describe "#create" do
-    let(:uri_pattern) {
-      /\/tags\/#{params[:entity_type]}\/#{params[:entity_id]}$/
-    } 
 
     let(:params) do
       {

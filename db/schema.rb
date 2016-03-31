@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20160330200612) do
     t.datetime "updated_at",     null: false
   end
 
+  add_index "entities", ["entity_type_id"], name: "index_entities_on_entity_type_id"
   add_index "entities", ["id"], name: "sqlite_autoindex_entities_1", unique: true
 
   create_table "entity_tags", force: :cascade do |t|
@@ -27,6 +28,8 @@ ActiveRecord::Schema.define(version: 20160330200612) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
+
+  add_index "entity_tags", ["entity_id", "tag_id"], name: "index_entity_tags_on_entity_id_and_tag_id", unique: true
 
   create_table "entity_types", force: :cascade do |t|
     t.string "name"

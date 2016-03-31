@@ -11,6 +11,9 @@ https://gist.github.com/dradford/9407c8c6af5ea3469596
 
 * Why use specific routes instead of `resources`?
 
+## Bad things
+
+* There are some n+1 queries in here that I'm not happy about.
 
 
 

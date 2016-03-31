@@ -31,7 +31,7 @@ class Entity < ActiveRecord::Base
   end
 
   def tags
-    Tag.where(id: entity_tags.map(&:tag_id)).map(&:name)
+    self.entity_tags.map(&:tag).map(&:name)
   end
 
 end

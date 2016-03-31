@@ -12,6 +12,7 @@ class CreateTagsAndEntities < ActiveRecord::Migration
       t.integer :entity_type_id
       t.timestamps null: false
     end
+    add_index :entities, [:entity_type_id]
 
     create_table :entity_types do |t|
       t.string :name
@@ -23,8 +24,6 @@ class CreateTagsAndEntities < ActiveRecord::Migration
       t.uuid :tag_id
       t.timestamps null: false
     end
-
-    # TODO: Indexes.
-
+    add_index :entity_tags, [:entity_id, :tag_id], unique: true
   end
 end
