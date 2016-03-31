@@ -15,6 +15,7 @@ class TagsController < ApplicationController
     if params[:entity_type] && params[:entity_id]
       @entity = Entity.find_or_initialize_by id: params[:entity_id]
       @entity.set_tags (params[:tags] || [])
+      @entity.type = params[:entity_type]
       @entity.save!
      
       location = create_tags_path entity_id: params[:entity_id],

@@ -14,6 +14,7 @@ RSpec.describe TagsController do
     before do
       entity = Entity.new(id: uuid)
       entity.set_tags %w( Neat Fast Apple )
+      entity.type = "iPhone"
       entity.save!
     end
 

@@ -2,7 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Entity do
 
-  let(:entity) { described_class.new }
+  let(:entity) do 
+    described_class.new.tap do |entity|
+      entity.type = "Product"
+    end
+  end
+  let(:tags) { %w( Test1 Test2 ) }
 
   it 'adds uuid by default' do
     entity.save
@@ -10,14 +15,12 @@ RSpec.describe Entity do
   end
 
   it 'adds tags to new entity' do
-    tags = ["Test1", "Test2"]
     entity.set_tags(tags) 
     expect(entity.tags.map(&:name)).to eql tags
   end
 
   it 'overwrites existing tags' do
-    tags1 = ["Test1", "Test2"]
-    entity.set_tags(tags1) 
+    entity.set_tags(tags) 
     entity.save!
 
     tags2 = ["Test3", "Test4"]
@@ -28,9 +31,10 @@ RSpec.describe Entity do
   end
 
   context 'deletion' do
-    let(:tags) { %w( Test1 Test2 ) }
+    
     let(:entity) do
       described_class.new do |entity|
+        entity.type = "Product"
         entity.set_tags tags
         entity.save!
       end
@@ -38,7 +42,6 @@ RSpec.describe Entity do
 
     it 'removes all entity_tags entries on delete' do
       entity.destroy
-
       expect(EntityTag.where(entity_id: entity.id)).to be_empty
     end
 

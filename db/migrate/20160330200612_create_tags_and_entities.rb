@@ -5,6 +5,7 @@ class CreateTagsAndEntities < ActiveRecord::Migration
       t.string :name
       t.timestamps null: false
     end
+    add_index :tags, [:name], unique: true
 
     create_table :entities, id: false do |t|
       t.uuid :id, primary_key: true
@@ -15,6 +16,7 @@ class CreateTagsAndEntities < ActiveRecord::Migration
     create_table :entity_types do |t|
       t.string :name
     end
+    add_index :entity_types, [:name], unique: true
 
     create_table :entity_tags do |t|
       t.uuid :entity_id

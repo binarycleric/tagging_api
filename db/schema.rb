@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20160330200612) do
     t.string "name"
   end
 
+  add_index "entity_types", ["name"], name: "index_entity_types_on_name", unique: true
+
   create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -39,5 +41,6 @@ ActiveRecord::Schema.define(version: 20160330200612) do
   end
 
   add_index "tags", ["id"], name: "sqlite_autoindex_tags_1", unique: true
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
 end

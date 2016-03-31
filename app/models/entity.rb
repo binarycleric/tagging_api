@@ -2,10 +2,21 @@ class Entity < ActiveRecord::Base
 
   has_many :entity_tags, dependent: :destroy
   has_many :tags, through: :entity_tags
+  belongs_to :entity_type
+
+  validates :entity_type, presence: true
 
   # TODO: Duplicated in Tag. Move somewhere common.
   before_create do |entity|
     entity.id ||= SecureRandom.uuid
+  end
+
+  def type=(name)
+    self.entity_type = EntityType.find_or_create_by(name: name)
+  end
+
+  def type
+    entity_type.name
   end
 
   ##
