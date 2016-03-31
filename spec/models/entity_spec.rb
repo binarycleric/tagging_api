@@ -32,6 +32,26 @@ RSpec.describe Entity do
     expect(entity.tag_names.sort).to eql tags2.sort
   end
 
+  describe 'self.find_typed_entity' do
+    before { entity.save }
+
+    it 'returns record' do
+      e2 = Entity.find_typed_entity(id: entity.id, type: entity.type)
+      expect(e2).to eql entity
+    end
+
+    it 'raises RecordNotFound if record values are invalid' do
+      expect do
+        Entity.find_typed_entity(id: 12345, type: entity.type)
+      end.to raise_error(ActiveRecord::RecordNotFound)
+
+      expect do
+        Entity.find_typed_entity(id: entity.id, type: 'Foo')
+      end.to raise_error(ActiveRecord::RecordNotFound)
+    end 
+
+  end
+
   context 'deletion' do
     
     let(:entity) do

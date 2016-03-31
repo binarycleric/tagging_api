@@ -10,6 +10,13 @@ class Entity < ActiveRecord::Base
     entity.id ||= SecureRandom.uuid
   end
 
+  def self.find_typed_entity(id:, type:)
+    type_obj = EntityType.find_by name: type 
+    find_by(id: id, entity_type: type_obj).tap do |entity|
+      raise ActiveRecord::RecordNotFound unless entity
+    end
+  end
+
   def type=(name)
     self.entity_type = EntityType.find_or_create_by(name: name)
   end

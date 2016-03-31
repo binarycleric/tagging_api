@@ -5,7 +5,8 @@ class TagsController < ApplicationController
   # NOTE: Since we're using UUIDs for the entity's primary key, we don't need
   #       to do anything with :entity_type. The joys of using UUIDs. :) 
   def show
-    @entity = Entity.find params[:entity_id]
+    @entity = Entity.find_typed_entity id: params[:entity_id],
+                                       type: params[:entity_type]
     render "entity"
   end
 
@@ -25,7 +26,8 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    @entity = Entity.find params[:entity_id]
+    @entity = Entity.find_typed_entity id: params[:entity_id],
+                                       type: params[:entity_type]
     @entity.destroy
 
     render status: :no_content, nothing: true
