@@ -5,4 +5,8 @@ Rails.application.routes.draw do
     as: :create_tags, 
     defaults: {format: :json} 
 
+  get "/tags/:entity_type/:entity_id" => "tags#show",
+    defaults: {format: :json}
+
+
 end

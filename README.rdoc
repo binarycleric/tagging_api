@@ -7,6 +7,12 @@ https://gist.github.com/dradford/9407c8c6af5ea3469596
 * Used `POST /tags` for create instead of `POST /tag`.
   * Felt more REST-ful.
 
+## Questions
+
+* Why use specific routes instead of `resources`?
+
+
+
 
 This README would normally document whatever steps are necessary to get the
 application up and running.

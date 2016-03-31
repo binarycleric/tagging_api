@@ -1,6 +1,6 @@
 class Entity < ActiveRecord::Base
 
-  has_many :entity_tags
+  has_many :entity_tags, dependent: :destroy
   has_many :tags, through: :entity_tags
 
   # TODO: Duplicated in Tag. Move somewhere common.
@@ -17,6 +17,10 @@ class Entity < ActiveRecord::Base
     self.tags = (tags || []).map do |name|
       Tag.find_or_initialize_by name: name
     end
+  end
+
+  def tag_names
+    tags.map(&:name)
   end
 
 end
