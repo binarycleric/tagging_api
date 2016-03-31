@@ -1,5 +1,9 @@
 require 'tagging_api_client'
 
+task :acceptance => ["acceptance:tags", "acceptance:stats"] do
+
+end
+
 namespace :acceptance do
   task :tags do
     client = TaggingApiClient.new
@@ -22,7 +26,7 @@ namespace :acceptance do
       raise "Failed to delete valid record"
     end
 
-    puts "All good!"
+    puts "Tags Acceptance Tests: All good!"
   end
 
   task :stats do
@@ -61,7 +65,7 @@ namespace :acceptance do
       raise "Created Tag is missing!"
     end
 
-    puts "All good!"
+    puts "Stats Acceptance Tests: All good!"
   end
 
 end

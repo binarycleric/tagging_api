@@ -39,7 +39,7 @@ should help us get off the ground.
 ```bash
 $ bundle exec rails s
 # In a different tab/pane
-$ bundle exec rake acceptance:tags acceptance:stats
+$ bundle exec rake acceptance
 ```
 
 ## Changes
