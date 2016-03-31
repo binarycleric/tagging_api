@@ -6,25 +6,30 @@ RSpec.describe TagsController do
 
   describe "#create" do
 
-    it "creates new tag" do
-      params = {
+    let(:params) do
+      {
         entity_type: 'Product',
         entity_id: uuid, 
-        tags: ['Large', 'Pink', 'Bike']
+        tags: ['Large']
       }
-      post :create, params
+    end 
+
+    it "creates new tag" do
+      put :create, params
+
+      entity = Entity.find_by(id: uuid)
+      expect(entity).to be
+      expect(entity.tags.map(&:name)).to eql ["Large"]
+    end
+
+    it "returns create HTTP status with resource location" do
+      uri_pattern = /\/tags\/#{params[:entity_type]}\/#{params[:entity_id]}$/ 
+
+      put :create, params
 
       expect(response).to have_http_status :created
       expect(response.body).to be_empty
-      expect(response.headers["Location"]).to be
-    end
-
-    it "returns bad request if params are missing" do
-      post :create, {} 
-
-      expect(response).to have_http_status :bad_request
-      expect(response.body).to_not be_empty
-      expect(response.headers["Location"]).to_not be
+      expect(response.headers["Location"]).to match(uri_pattern) 
     end
 
   end
