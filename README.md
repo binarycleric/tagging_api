@@ -61,7 +61,7 @@ functionality into Rails routes would most likely result in unexpected bugs and
 somewhat confusing code. To make our routes as clear as possible I felt that
 adding each one manually was the best approach.
 
-### Stats looks a little sparse
+### Why are the stats endpoints so sparse? 
 
 Correct. I had thought about various features to add to the stats endpoints, but
 I'm not 100% sure of their uses-cases yet. Instead of possibly building features
