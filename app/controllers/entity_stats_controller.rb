@@ -1,4 +1,4 @@
-class StatsController < ApplicationController
+class EntityStatsController < ApplicationController
 
   rescue_from ActiveRecord::RecordNotFound do
     render status: :not_found, json: {
@@ -10,15 +10,9 @@ class StatsController < ApplicationController
     } 
   end
 
-  def index
-    @tags = Tag.all.preload(:entities)
-  end
-
   def show
     @entity = Entity.find params[:entity_id]
-    @tags = @entity.entity_tags.map(&:tag)
-
-    render "index"
+    @entity_tags = @entity.entity_tags
   end
 
 end

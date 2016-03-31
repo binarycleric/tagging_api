@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   delete "/tags/:entity_type/:entity_id" => "tags#destroy",
     defaults: {format: :json}
 
-  get "/stats" => "stats#index",
+  get "/stats" => "tag_stats#index",
     defaults: {format: :json}
 
-  get "/stats/:entity_type/:entity_id" => "stats#show",
+  get "/stats/:entity_type/:entity_id" => "entity_stats#show",
     defaults: {format: :json}
 end
