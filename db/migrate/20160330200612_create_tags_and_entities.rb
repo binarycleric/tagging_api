@@ -1,7 +1,7 @@
 class CreateTagsAndEntities < ActiveRecord::Migration
   def change
     create_table :tags do |t|
-      t.uuid :uuid
+      t.string :uuid, limit: 36, null: false
       t.string :name
       t.timestamps null: false
     end
@@ -9,7 +9,7 @@ class CreateTagsAndEntities < ActiveRecord::Migration
     add_index :tags, :uuid
 
     create_table :entities do |t|
-      t.uuid :uuid
+      t.string :uuid, limit: 36, null: false
       t.integer :entity_type_id
       t.timestamps null: false
     end

@@ -1,6 +1,4 @@
 class Entity < ActiveRecord::Base
-  include ActiveUUID::UUID
-
   has_many :entity_tags, dependent: :destroy
   has_many :tags, through: :entity_tags
   belongs_to :entity_type

@@ -26,7 +26,6 @@ namespace :acceptance do
   end
 
   task :stats do
-
     def tag_count_for(tags, name)
       tags.select{|t| t["name"] == "Awesome"}.first["count"] rescue 0
     end

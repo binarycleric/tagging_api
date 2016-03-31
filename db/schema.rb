@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20160330200612) do
 
   create_table "entities", force: :cascade do |t|
-    t.uuid     "uuid",           limit: 16
+    t.string   "uuid",           limit: 36, null: false
     t.integer  "entity_type_id"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20160330200612) do
   add_index "entity_types", ["name"], name: "index_entity_types_on_name", unique: true
 
   create_table "tags", force: :cascade do |t|
-    t.uuid     "uuid",       limit: 16
+    t.string   "uuid",       limit: 36, null: false
     t.string   "name"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
