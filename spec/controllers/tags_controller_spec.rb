@@ -8,31 +8,22 @@ RSpec.describe TagsController do
   end
 
   let(:uuid) { SecureRandom.uuid }
-
-  describe "#show" do
-
-    before do
-      entity = Entity.new(id: uuid)
+  let(:entity) do
+    Entity.new(id: uuid).tap do |entity|
       entity.set_tags %w( Neat Fast Apple )
       entity.type = "iPhone"
       entity.save!
     end
+  end
 
+  describe "#show" do
     it 'returns entity when requested' do
-      get :show, {entity_id: uuid, entity_type: "Product"}
-
-      entity = JSON.parse(response.body)["entity"]
-
-      expect(entity["uuid"]).to eql uuid
-      expect(entity["tags"]).to eql %w( Neat Fast Apple )
-      expect(entity["created_at"]).to be
-      expect(entity["updated_at"]).to be
+      get :show, {entity_id: entity.id, entity_type: entity.type}
+      expect_entity_json_response(entity)
     end
-
   end
 
   describe "#create" do
-
     let(:uri_pattern) {
       /\/tags\/#{params[:entity_type]}\/#{params[:entity_id]}$/
     } 
@@ -62,14 +53,17 @@ RSpec.describe TagsController do
     it "returns JSON representation of entity" do
       put :create, params
 
-      json_entity = JSON.parse(response.body)["entity"]
-      expect(json_entity).to be
-      expect(json_entity["uuid"]).to be
-      expect(json_entity["created_at"]).to be
-      expect(json_entity["updated_at"]).to be
-      expect(json_entity["tags"]).to be_kind_of(Array)
+      entity = Entity.find(uuid)
+      expect_entity_json_response(entity)
     end
+  end
 
+  describe "#destroy" do
+    it "deletes entity" do
+      delete :destroy, {entity_type: entity.type, entity_id: entity.id}
+
+      expect(response).to have_http_status :no_content
+    end
   end
 
 end

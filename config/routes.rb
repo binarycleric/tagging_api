@@ -8,5 +8,8 @@ Rails.application.routes.draw do
   get "/tags/:entity_type/:entity_id" => "tags#show",
     defaults: {format: :json}
 
+  delete "/tags/:entity_type/:entity_id" => "tags#destroy",
+    defaults: {format: :json}
+
 
 end
