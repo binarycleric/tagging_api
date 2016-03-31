@@ -26,11 +26,11 @@ RSpec.describe TagStatsController do
     it "displays stats about tags" do
       get :index
 
-      tags = JSON.parse(response.body)["tags"]
+      tags = JSON.parse(response.body)["stats"]["tags"]
       expect(tags).to be
 
       expect(tags.map{|t| t['name']}.sort).to eql expected_tags.sort
-      expect(tags.map{|t| t['count']}.uniq).to eql [2] 
+      expect(tags.map{|t| t['records_tagged']}.uniq).to eql [2] 
     end
   end
 

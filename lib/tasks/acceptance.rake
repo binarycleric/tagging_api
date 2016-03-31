@@ -27,7 +27,7 @@ namespace :acceptance do
 
   task :stats do
     def tag_count_for(tags, name)
-      tags.select{|t| t["name"] == "Awesome"}.first["count"] rescue 0
+      tags.select{|t| t["name"] == "Awesome"}.first["records_tagged"] rescue 0
     end
 
     client = TaggingApiClient.new
@@ -40,7 +40,7 @@ namespace :acceptance do
                            tags: %w( Awesome )
     end
 
-    tags = JSON.parse(client.get_stats.body)["tags"]
+    tags = JSON.parse(client.get_stats.body)["stats"]["tags"]
     if tags.select{|t| t["name"] == "Awesome"}.empty?
       raise "Created Tag is missing!"
     end
@@ -55,7 +55,7 @@ namespace :acceptance do
     entity = JSON.parse(response.body)["entity"]
 
     response = client.get_entity_stats(type: entity["type"], id: entity["uuid"])
-    entity_tags = JSON.parse(response.body)["tags"]
+    entity_tags = JSON.parse(response.body)["stats"]["tags"]
 
     if entity_tags.first["name"] != "Awesome"
       raise "Created Tag is missing!"
