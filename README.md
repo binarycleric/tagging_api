@@ -42,6 +42,40 @@ $ bundle exec rails s
 $ bundle exec rake acceptance
 ```
 
+## Endpoints
+
+Create tags for a particular entity (given a type and id).
+
+```
+PUT /tags/:entity_type/:entity_id
+tags: []
+```
+
+Get information about tags stored on a particular entity.
+
+```
+GET /tags/:entity_type/:entity_id
+```
+
+Delete all tags on a particular entity.
+
+```
+DELETE /tags/:entity_type/:entity_id 
+```
+
+Get stats about all stored tags.
+
+```
+GET /stats/tags
+```
+
+Get stats about tags stored on a particular entity.
+
+```
+GET /stats/:entity_type/:entity_id
+```
+
+
 ## Changes
 
 ### Used 'PUT /tags' instead of 'POST /tags'
