@@ -12,7 +12,7 @@ module ControllerHelpers
     json_entity = JSON.parse(response.body)["entity"]
 
     expect(json_entity["uuid"]).to eql entity.id
-    expect(json_entity["tags"].sort).to eql entity.tags.sort
+    expect(json_entity["tags"].sort).to eql entity.tag_names.sort
     expect(json_entity["type"]).to eql entity.type
     expect(json_entity["created_at"]).to be
     expect(json_entity["updated_at"]).to be

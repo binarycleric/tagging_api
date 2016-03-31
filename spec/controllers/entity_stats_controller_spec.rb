@@ -15,7 +15,7 @@ RSpec.describe EntityStatsController do
     let(:entity) do
       Entity.new.tap do |e|
         e.type = "Test"
-        e.tags = expected_tags 
+        e.tag_names = expected_tags 
         e.save!
       end
     end

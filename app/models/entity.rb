@@ -1,6 +1,7 @@
 class Entity < ActiveRecord::Base
 
   has_many :entity_tags, dependent: :destroy
+  has_many :tags, through: :entity_tags
   belongs_to :entity_type
 
   validates :entity_type, presence: true
@@ -23,14 +24,14 @@ class Entity < ActiveRecord::Base
   # of tags, it does not append to existing tags.
   #
   # TODO: Make this not require n number of SQL queries.
-  def tags=(tags=[])
+  def tag_names=(tags=[])
     self.entity_tags = tags.map do |name|
       tag = Tag.find_or_initialize_by name: name
       self.entity_tags.new(tag: tag)
     end
   end
 
-  def tags
+  def tag_names
     self.entity_tags.map(&:tag).map(&:name)
   end
 

@@ -13,7 +13,7 @@ class TagsController < ApplicationController
   # Uses PUT, since we are logically upserting. 
   def create
     @entity = Entity.find_or_initialize_by id: params[:entity_id]
-    @entity.tags = (params[:tags] || [])
+    @entity.tag_names = (params[:tags] || [])
     @entity.type = params[:entity_type]
     @entity.save!
    
