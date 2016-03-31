@@ -21,6 +21,13 @@ RSpec.describe Entity do
     expect(entity.tag_names.sort).to eql tags.sort
   end
 
+  it 'tags persist when new records are loaded' do
+    entity.tag_names = tags
+    entity.save!
+
+    expect(Entity.find(entity.id).tag_names.sort).to eql tags.sort
+  end
+
   it 'overwrites existing tags' do
     entity.tag_names = tags 
     entity.save!

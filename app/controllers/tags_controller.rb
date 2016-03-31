@@ -17,7 +17,7 @@ class TagsController < ApplicationController
     @entity.tag_names = (params[:tags] || [])
     @entity.type = params[:entity_type]
     @entity.save!
-   
+
     location = create_tags_path entity_id: params[:entity_id],
                                 entity_type: params[:entity_type] 
 

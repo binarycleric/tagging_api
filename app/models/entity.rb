@@ -1,4 +1,5 @@
 class Entity < ActiveRecord::Base
+  include ActiveUUID::UUID
 
   has_many :entity_tags, dependent: :destroy
   has_many :tags, through: :entity_tags
@@ -38,7 +39,7 @@ class Entity < ActiveRecord::Base
   end
 
   def tag_names
-    self.entity_tags.preload(:tag).map(&:tag).map(&:name)
+    self.entity_tags.map(&:tag).map(&:name)
   end
 
 end

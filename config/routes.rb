@@ -15,4 +15,5 @@ Rails.application.routes.draw do
 
   get "/stats/:entity_type/:entity_id" => "entity_stats#show",
     defaults: {format: :json}
+
 end
