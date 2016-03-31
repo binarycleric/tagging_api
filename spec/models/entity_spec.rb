@@ -15,19 +15,19 @@ RSpec.describe Entity do
   end
 
   it 'adds tags to new entity' do
-    entity.set_tags(tags) 
-    expect(entity.tags.map(&:name)).to eql tags
+    entity.tags = tags
+    expect(entity.tags).to eql tags
   end
 
   it 'overwrites existing tags' do
-    entity.set_tags(tags) 
+    entity.tags = tags 
     entity.save!
 
     tags2 = ["Test3", "Test4"]
-    entity.set_tags(tags2)
+    entity.tags = tags2
     entity.save!
     
-    expect(entity.tags.map(&:name)).to eql tags2
+    expect(entity.tags).to eql tags2
   end
 
   context 'deletion' do
@@ -35,7 +35,7 @@ RSpec.describe Entity do
     let(:entity) do
       described_class.new do |entity|
         entity.type = "Product"
-        entity.set_tags tags
+        entity.tags = tags
         entity.save!
       end
     end

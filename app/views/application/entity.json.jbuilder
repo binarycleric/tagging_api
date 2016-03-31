@@ -1,5 +1,4 @@
 json.entity do
   json.uuid @entity.id
-  json.tags @entity.tag_names
-  json.(@entity, :type, :created_at, :updated_at)
+  json.(@entity, :tags, :type, :created_at, :updated_at)
 end

@@ -10,7 +10,7 @@ RSpec.describe TagsController do
   let(:uuid) { SecureRandom.uuid }
   let(:entity) do
     Entity.new(id: uuid).tap do |entity|
-      entity.set_tags %w( Neat Fast Apple )
+      entity.tags = %w( Neat Fast Apple )
       entity.type = "iPhone"
       entity.save!
     end
@@ -40,7 +40,7 @@ RSpec.describe TagsController do
       put :create, params
 
       entity = Entity.find(uuid)
-      expect(entity.tag_names).to eql %w( Large )
+      expect(entity.tags).to eql %w( Large )
     end
 
     it "returns create HTTP status with resource location" do
