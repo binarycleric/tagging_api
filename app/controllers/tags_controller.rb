@@ -1,11 +1,20 @@
 class TagsController < ApplicationController
 
+  rescue_from ActiveRecord::RecordNotFound do
+    render status: :not_found, json: {
+      error: {
+        message: "Specified record not found",
+        params: {entity_id: params[:entity_id],
+                 entity_type: params[:entity_type]}
+      }
+    } 
+  end
+
   ##
-  # TODO: Failure cases.
+  # NOTE: Since we're using UUIDs for the entity's primary key, we don't need
+  #       to do anything with :entity_type. The joys of using UUIDs. :) 
   def show
-    # NOTE: Since we're using UUIDs for the entity's primary key, we don't need
-    #       to do anything with :entity_type. The joys of using UUIDs. :) 
-    @entity = Entity.find_by id: params[:entity_id]
+    @entity = Entity.find params[:entity_id]
     render "entity"
   end
 
@@ -25,7 +34,7 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    @entity = Entity.find_by id: params[:entity_id]
+    @entity = Entity.find params[:entity_id]
     @entity.destroy
 
     render status: :no_content, nothing: true

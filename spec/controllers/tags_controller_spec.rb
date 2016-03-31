@@ -24,6 +24,13 @@ RSpec.describe TagsController do
       get :show, {entity_id: entity.id, entity_type: entity.type}
       expect_entity_json_response(entity)
     end
+
+    it 'returns not_found for invalid entity' do
+      get :show, {entity_id: SecureRandom.uuid, entity_type: "Product"}
+      
+      expect_missing_entity_json_response
+    end
+
   end
 
   describe "#create" do
@@ -63,6 +70,12 @@ RSpec.describe TagsController do
       delete :destroy, {entity_type: entity.type, entity_id: entity.id}
 
       expect(response).to have_http_status :no_content
+    end
+
+    it 'returns not_found for invalid entity' do
+      delete :destroy, {entity_id: SecureRandom.uuid, entity_type: "Product"}
+      
+      expect_missing_entity_json_response
     end
   end
 

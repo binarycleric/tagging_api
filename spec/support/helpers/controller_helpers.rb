@@ -1,5 +1,13 @@
 module ControllerHelpers
 
+  def expect_missing_entity_json_response
+    payload = JSON.parse(response.body)["error"]
+   
+    expect(response).to have_http_status :not_found
+    expect(payload["message"]).to be
+    expect(payload["params"]).to be
+  end
+
   def expect_entity_json_response(entity)
     json_entity = JSON.parse(response.body)["entity"]
 
